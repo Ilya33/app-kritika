@@ -49,7 +49,9 @@
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.98"
+            "Test::MonkeyMock" : "0",
+            "Test::More" : "0.98",
+            "Test::TempDir::Tiny" : "0"
          }
       }
    },
@@ -65,7 +67,7 @@
          "web" : "https://github.com/kritikaio/app-kritika"
       }
    },
-   "version" : "0.01",
+   "version" : "0.02",
    "x_authority" : "cpan:VTI",
    "x_serialization_backend" : "JSON::PP version 2.27300_01"
 }

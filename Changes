@@ -2,6 +2,10 @@ Revision history for Perl extension App-Kritika
 
 {{$NEXT}}
 
+0.02 2017-03-20T18:32:41Z
+
+    - fix dependencies
+
 0.01 2017-03-20T18:25:52Z
 
     - original version
