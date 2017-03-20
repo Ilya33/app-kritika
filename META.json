@@ -54,6 +54,17 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/kritikaio/app-kritika/issues"
+      },
+      "homepage" : "https://github.com/kritikaio/app-kritika",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/kritikaio/app-kritika.git",
+         "web" : "https://github.com/kritikaio/app-kritika"
+      }
+   },
    "version" : "0.01",
    "x_authority" : "cpan:VTI",
    "x_serialization_backend" : "JSON::PP version 2.27300_01"
