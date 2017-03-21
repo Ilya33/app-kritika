@@ -6,6 +6,7 @@ use warnings;
 our $VERSION = '0.02';
 
 use JSON ();
+use Cwd qw(abs_path);
 use HTTP::Tiny;
 
 sub new {
@@ -28,6 +29,8 @@ sub validate {
     my $self = shift;
     my ($path) = @_;
 
+    $path = abs_path($path);
+
     my $content = do {
         local $/;
         open my $fh, '<', $path or die "Can't open file '$path': $!";
@@ -37,6 +40,7 @@ sub validate {
     my $ua = $self->{ua};
 
     if (my $root = $self->{root}) {
+        $root = abs_path($root);
         $path =~ s{^$root}{};
         $path =~ s{^/}{};
     }

@@ -6,6 +6,7 @@ use warnings;
 use Cwd qw(getcwd);
 use File::Basename qw(dirname);
 use File::Spec;
+use File::HomeDir ();
 
 sub new {
     my $class = shift;
@@ -45,7 +46,10 @@ sub _detect {
         $dirname = File::Spec->catdir(getcwd(), $dirname);
     }
 
-    my @dir = File::Spec->splitdir($dirname);
+    my ($volume, $dirs, $file) = File::Spec->splitpath($dirname);
+    $dirs = File::Spec->catdir($dirs, $file) if $file ne '';
+
+    my @dir = File::Spec->splitdir($dirs);
 
     while (@dir) {
         my $location = File::Spec->catfile(@dir, '.kritikarc');
@@ -55,7 +59,7 @@ sub _detect {
         pop @dir;
     }
 
-    my $location = "$ENV{HOME}/.kritikarc";
+    my $location = File::Spec->catfile(File::HomeDir->my_home, '.kritikarc');
     return $location if -f $location;
 
     return;
