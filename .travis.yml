@@ -7,7 +7,7 @@ os:
   - linux
   - osx
 before_install:
-    - curl -L https://cpanmin.us | perl - App::cpanminus
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; brew install perlbrew; perlbrew install-cpanm; fi
 install:
     - cpanm -n -q --installdeps .
 script:
