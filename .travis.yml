@@ -6,3 +6,9 @@ perl:
 os:
   - linux
   - osx
+before_install:
+    - curl -L https://cpanmin.us | perl - App::cpanminus
+install:
+    - cpanm -n -q --installdeps .
+script:
+    - prove -l -r t/
