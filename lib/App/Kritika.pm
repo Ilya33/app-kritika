@@ -3,7 +3,7 @@ package App::Kritika;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use JSON ();
 use Cwd qw(abs_path);
