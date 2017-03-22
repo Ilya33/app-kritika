@@ -1,5 +1,4 @@
 version: '{build}'
-cache: C:\strawberry\
 install:
 - cmd: >-
     choco install -y --allow-empty-checksums strawberryperl -version 5.20.1.1
