@@ -50,6 +50,7 @@ sub _detect {
     $dirs = File::Spec->catdir($dirs, $file) if $file ne '';
 
     my @dir = File::Spec->splitdir($dirs);
+    unshift @dir, $volume if $volume;
 
     while (@dir) {
         for ($self->_rc_names) {
