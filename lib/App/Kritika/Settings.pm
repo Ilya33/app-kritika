@@ -52,15 +52,18 @@ sub _detect {
     my @dir = File::Spec->splitdir($dirs);
 
     while (@dir) {
-        my $location = File::Spec->catfile(@dir, '.kritikarc');
-
-        return $location if -f $location;
+        for ($self->_rc_names) {
+            my $location = File::Spec->catfile(@dir, $_);
+            return $location if -f $location;
+        }
 
         pop @dir;
     }
 
-    my $location = File::Spec->catfile(File::HomeDir->my_home, '.kritikarc');
-    return $location if -f $location;
+    for ($self->_rc_names) {
+        my $location = File::Spec->catfile(File::HomeDir->my_home, $_);
+        return $location if -f $location;
+    }
 
     return;
 }
@@ -86,6 +89,10 @@ sub _parse {
     }
 
     return $options;
+}
+
+sub _rc_names {
+    return ('.kritikarc', '_kritikarc');
 }
 
 1;
