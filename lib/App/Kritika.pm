@@ -16,9 +16,11 @@ sub new {
     my $self = {};
     bless $self, $class;
 
-    $self->{base_url} = $params{base_url} or die 'base_url required';
-    $self->{token}    = $params{token}    or die 'token required';
-    $self->{root}     = $params{root};
+    $self->{base_url} = $params{base_url} || 'https://kritika.io';
+    $self->{token}   = $params{token} or die 'token required';
+    $self->{root}    = $params{root};
+    $self->{head}    = $params{head};
+    $self->{changes} = $params{changes};
 
     $self->{ua} = $params{ua} || HTTP::Tiny->new;
 
@@ -39,7 +41,7 @@ sub validate {
 
     my $ua = $self->{ua};
 
-    if (my $root = $self->{root}) {
+    if ( my $root = $self->{root} ) {
         $root = abs_path($root);
         $path =~ s{^$root}{};
         $path =~ s{^/}{};
@@ -48,17 +50,18 @@ sub validate {
     my $response = $ua->post_form(
         "$self->{base_url}/validate",
         {
+            $self->{head}    ? ( head    => $self->{head} )    : (),
+            $self->{changes} ? ( changes => $self->{changes} ) : (),
             content => $content,
             path    => $path
         },
-        {headers => {Authorization => 'Token ' . $self->{token}}}
+        { headers => { Authorization => 'Token ' . $self->{token} } }
     );
 
-    die
-"Remote error: $response->{status} $response->{reason}; $response->{content}\n"
+    die "Remote error: $response->{status} $response->{reason}\n"
       unless $response->{success};
 
-    return JSON::decode_json($response->{content});
+    return JSON::decode_json( $response->{content} );
 }
 
 1;
