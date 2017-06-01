@@ -34,7 +34,11 @@ my $kritika =
 
 my $issues_found = 0;
 foreach my $file (@files) {
-    my $report = $kritika->validate($file);
+    my $report = eval { $kritika->validate($file) } or do {
+        print "Error: $file:$@";
+        $issues_found++;
+        next;
+    };
 
     foreach my $issue (@$report) {
         $issue->{col_no} //= 1;
@@ -42,6 +46,10 @@ foreach my $file (@files) {
           . "[$issue->{profile}/$issue->{rule}] $issue->{message}\n";
 
         $issues_found++;
+    }
+
+    if ( !@$report ) {
+        print "$file:OK\n";
     }
 }
 
@@ -79,6 +87,7 @@ This is based on the shipped with C<git> pre-push hook example.
     do
         if [ "$local_sha" = $z40 ]
         then
+            :
         else
             if [ "$remote_sha" = $z40 ]
             then
@@ -89,7 +98,7 @@ This is based on the shipped with C<git> pre-push hook example.
 
             branch="$(git rev-parse --abbrev-ref HEAD)"
 
-            kritika --head "$branch" $(git diff --name-only $range) || exit 1
+            git diff --name-only $range | kritika --head "$branch" || exit 1
         fi
     done
 
