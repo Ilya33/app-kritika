@@ -58,6 +58,12 @@ sub validate {
         { headers => { Authorization => 'Token ' . $self->{token} } }
     );
 
+    if ($response->{status} eq '599') {
+        my $content = $response->{content};
+        $content = substr($content, 0, 64) . '[...]' if length $content > 64;
+        die "Internal error: $response->{status} $content";
+    }
+
     die "Remote error: $response->{status} $response->{reason}\n"
       unless $response->{success};
 
