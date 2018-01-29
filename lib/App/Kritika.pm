@@ -26,8 +26,12 @@ sub new {
     $self->{diff_snapshot} = $params{diff_snapshot};
     $self->{diff_branch}   = $params{diff_branch};
 
-    $self->{branch}   = $params{branch}   // $self->_detect_branch;
-    $self->{revision} = $params{revision} // $self->_detect_revision;
+    $self->{branch} = $params{branch};
+    $self->{branch} = $self->_detect_branch unless defined $self->{branch};
+
+    $self->{revision} = $params{revision};
+    $self->{revision} = $self->_detect_revision
+      unless defined $self->{revision};
 
     return $self;
 }
@@ -99,7 +103,7 @@ sub validate {
     unless ( $response->{success} ) {
         my $message =
           eval { JSON::decode_json( $response->{content} )->{message} }
-          // 'Unknown Error';
+          || 'Unknown Error';
 
         die "Remote error: $response->{status} $response->{reason}: $message\n";
     }
@@ -122,7 +126,7 @@ sub _detect_revision {
     my $self = shift;
     my ($ref) = @_;
 
-    $ref //= 'HEAD';
+    $ref = 'HEAD' unless defined $ref;
 
     die "Doesn't look like a git repository\n" unless -d "$self->{root}/.git";
 
