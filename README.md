@@ -9,9 +9,9 @@ kritika - integrate with kritika.io
 
 # DESCRIPTION
 
-This command allows you to quickly analyze file using [https://kritika.io](https://kritika.io) service. Normally `kritika.io` analyzes
-your repository after the push, but of course sometimes you would like to know if something's wrong before doing
-a commit.
+This command allows you to quickly analyze file using [https://kritika.io](https://kritika.io) service. Normally
+`kritika.io` analyzes your repository after the push, but of course sometimes you would like to know if something's
+wrong before doing a commit.
 
 ## Git Hook Example
 

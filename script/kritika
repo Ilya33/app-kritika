@@ -119,7 +119,8 @@ This is based on the shipped with C<git> pre-push hook example.
 
             branch="$(git rev-parse --abbrev-ref HEAD)"
 
-            git diff --name-only $range | kritika --diff-branch master --branch "$branch" --revision "$local_sha" || exit 1
+            git diff --name-only $range | kritika --diff-branch master \
+                --branch "$branch" --revision "$local_sha" || exit 1
         fi
     done
 
