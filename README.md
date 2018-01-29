@@ -39,7 +39,7 @@ This is based on the shipped with `git` pre-push hook example.
 
             branch="$(git rev-parse --abbrev-ref HEAD)"
 
-            git diff --name-only $range | kritika --head "$branch" || exit 1
+            git diff --name-only $range | kritika --diff-branch "$branch" || exit 1
         fi
     done
 
